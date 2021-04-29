@@ -2,4 +2,7 @@ QWidget {
     background-color: mediumaquamarine;
 }
 
-
+QPushButton{
+    background-color: darkslateblue;
+    color: whitesmoke;
+}
