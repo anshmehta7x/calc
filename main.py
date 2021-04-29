@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QPushButton
 
-
 ap = QApplication([])
 win =  QWidget()
 
@@ -38,6 +37,8 @@ minus = QPushButton("-")
 multiply = QPushButton("x")
 divide = QPushButton("÷")
 equal = QPushButton("=")
+power = QPushButton("^")
+clear = QPushButton("CLR")
 
 #coloring
 one.setStyleSheet(open('styling.css').read())
@@ -56,6 +57,8 @@ minus.setStyleSheet(open('altstyling.css').read())
 multiply.setStyleSheet(open('altstyling.css').read())
 divide.setStyleSheet(open('altstyling.css').read())
 equal.setStyleSheet(open('altstyling.css').read())
+power.setStyleSheet(open('altstyling.css').read())
+clear.setStyleSheet(open('parwindowstyling.css').read())
 
 #row 1
 lay.addWidget(line,1,1,2,4)
@@ -75,10 +78,13 @@ lay.addWidget(eight,5,2)
 lay.addWidget(nine,5,3)
 lay.addWidget(multiply,5,4)
 #row 5
-lay.addWidget(equal,6,1)
+lay.addWidget(power,6,1)
 lay.addWidget(dot,6,2)
 lay.addWidget(zero,6,3)
 lay.addWidget(divide,6,4)
+#row 6
+lay.addWidget(equal,7,1,1,3)
+lay.addWidget(clear,7,4)
 
 #functions
 
@@ -159,6 +165,13 @@ def adot():
     x += "."
     line.setText(x)
 
+def apower():
+    x = line.text()
+    x += "^"
+    line.setText(x)
+
+def clr():
+    line.setText("")
 
 def eq():
     x = line.text()
@@ -182,7 +195,10 @@ plus.clicked.connect(aplus)
 minus.clicked.connect(aminus)
 multiply.clicked.connect(amult)
 divide.clicked.connect(adiv)
+power.clicked.connect(apower)
 equal.clicked.connect(eq)
+clear.clicked.connect(clr)
 
 win.show()
 sys.exit(ap.exec_())
+
