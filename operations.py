@@ -115,13 +115,20 @@ def subtractsolve(j):
 
 
     while "-" in s:
+        print(s)
+        if re.search("^[\-].*[0-9]$",s) is None:
+            pass
+        else:
+            return s
+            
         
         i = s.find("-")
         a = s[:i]
         b = s[i+1:]
         t1 = front(a)
         t2 = back(b)
-        
+        print(t1)
+        print(t2)
         power = float(t1)-float(t2)
        
         torep = t1 + "-" + t2
@@ -131,8 +138,10 @@ def subtractsolve(j):
 
 def solution(bruh):
     iput = str(bruh)
+
     if errcheck(iput) == 0:
         if re.search('[x+\-÷\^]', iput) is None:
+
             return iput
         else:
             x = subtractsolve(addsolve(multsolve(dividesolve(powersolve(iput)))))
