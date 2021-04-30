@@ -63,6 +63,7 @@ divide.setStyleSheet(open('altstyling.css').read())
 equal.setStyleSheet(open('altstyling.css').read())
 power.setStyleSheet(open('altstyling.css').read())
 clear.setStyleSheet(open('parwindowstyling.css').read())
+line.setStyleSheet(open('styling.css').read())
 
 #row 1
 lay.addWidget(line,1,1,2,4)
