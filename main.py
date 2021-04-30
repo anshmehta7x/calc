@@ -7,13 +7,17 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QPushButton
+from PyQt5 import QtGui
+
+
+from PyQt5.Qt import Qt
 
 ap = QApplication([])
 win =  QWidget()
 
 win.setStyleSheet(open('parwindowstyling.css').read())
 win.setWindowTitle("Calculator")
-
+win.setWindowIcon(QtGui.QIcon('icon.png'))
 lay = QGridLayout()
 win.setLayout(lay)
 #win.setGeometry(150,150,400,600)
@@ -178,7 +182,6 @@ def eq():
     s = solution(x)
     line.setText(str(s))
     
-
 #connections
 one.clicked.connect(a1)
 two.clicked.connect(a2)
@@ -198,6 +201,7 @@ divide.clicked.connect(adiv)
 power.clicked.connect(apower)
 equal.clicked.connect(eq)
 clear.clicked.connect(clr)
+line.returnPressed.connect(eq)
 
 win.show()
 sys.exit(ap.exec_())
