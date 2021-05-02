@@ -1,5 +1,5 @@
 import re
-
+import math
 ops = ["x","^","+","-","÷"]
 
 def front(x):
@@ -115,22 +115,18 @@ def subtractsolve(j):
 
 
     while "-" in s:
-        print(s)
-        if re.search("^[\-].*[0-9]$",s) is None:
-            pass
-        else:
+
+        if re.search("^[\-].*[0-9]$", s) is not None:
             return s
-            
-        
+
+
         i = s.find("-")
         a = s[:i]
         b = s[i+1:]
         t1 = front(a)
         t2 = back(b)
-        print(t1)
-        print(t2)
         power = float(t1)-float(t2)
-       
+
         torep = t1 + "-" + t2
         s = s.replace(torep,str(power))
 
@@ -138,7 +134,7 @@ def subtractsolve(j):
 
 def solution(bruh):
     iput = str(bruh)
-
+    
     if errcheck(iput) == 0:
         if re.search('[x+\-÷\^]', iput) is None:
 
@@ -164,3 +160,115 @@ def errcheck(inp):
         return "Operation can't end with an alphabet!"
     
     return 0
+
+def trigsolve(mainstr,func,inverse,mode):
+    if "π" in mainstr:
+        nopi = mainstr.replace("π","")
+        piremoved = float(nopi) * math.pi
+
+    else:
+        piremoved = float(mainstr)
+
+    if inverse == False:
+        if mode == True:
+            rads = math.radians(piremoved)
+        else:
+            rads = piremoved
+
+        if func == "sin":
+            
+            return round(math.sin(rads),4)
+        
+        elif func == "cos":
+            return round(math.cos(rads),4)
+
+        elif func == "tan":
+            if math.tan(rads) > 10000000:
+                return "undefined"
+            else:
+                return round(math.tan(rads),4)
+        
+        elif func == "csc":
+            return round(1/math.sin(rads),4)
+        
+        elif func == "sec":
+            return round(1/math.cos(rads),4)
+
+        elif func == "cot":
+            try:
+                1/math.tan(rads)
+            except ZeroDivisionError:
+                return "undefined"
+            if 1/math.tan(rads) > 10000000:
+                return "undefined"
+            else:
+                return round(math.tan(rads),4)
+    
+    elif inverse == True:
+
+        if func == "sin":
+            x = math.asin(piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+        elif func == "cos":
+            x = math.acos(piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+            
+
+        elif func == "tan":
+            x = math.atan(piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+
+        elif func == "csc":
+            x = math.asin(1/piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+        elif func == "sec":
+            x = math.acos(1/piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+
+        elif func == "cot":
+            x = math.atan(1/piremoved)
+            if mode == True:
+                return round(math.degrees(x),4)
+            else:
+                return round(x,4)
+
+
+        
+
+def trigerrcheck(mainstr,func,inverse,mode):
+
+    t1 = re.search('[a-zA-Z]', str(mainstr))
+    if t1 is not None:
+        return "Can't have letters!"
+    
+    t2 = re.findall('\.',mainstr)
+    if len(t2) > 1:
+        return "Too many dots"
+
+    t3 = re.findall("[π]", mainstr)
+    if len(t3) > 1:
+        return "Can only have one π"
+    
+    return trigsolve(mainstr,func,inverse,mode)
+
+    

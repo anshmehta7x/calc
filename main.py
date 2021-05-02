@@ -1,5 +1,6 @@
 import sys
-from operations import *
+from operations import solution
+from operations import trigerrcheck
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QLabel
@@ -7,6 +8,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QCheckBox
+from PyQt5.QtWidgets import QSlider
 from PyQt5 import QtGui
 
 
@@ -43,6 +46,7 @@ divide = QPushButton("÷")
 equal = QPushButton("=")
 power = QPushButton("^")
 clear = QPushButton("CLR")
+trig = QPushButton("Trig")
 
 #coloring
 one.setStyleSheet(open('styling.css').read())
@@ -63,6 +67,7 @@ divide.setStyleSheet(open('altstyling.css').read())
 equal.setStyleSheet(open('altstyling.css').read())
 power.setStyleSheet(open('altstyling.css').read())
 clear.setStyleSheet(open('parwindowstyling.css').read())
+trig.setStyleSheet(open('parwindowstyling.css').read())
 line.setStyleSheet(open('styling.css').read())
 
 #row 1
@@ -90,6 +95,207 @@ lay.addWidget(divide,6,4)
 #row 6
 lay.addWidget(equal,7,1,1,3)
 lay.addWidget(clear,7,4)
+#row 7
+lay.addWidget(trig,8,1,1,4)
+
+
+#trig window
+class trigwin(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.makeui()
+    
+    def inv(self):
+        if self.invert.isChecked() == True:
+            self.is_inverse = True
+            self.sin.setText("sin⁻¹")
+            self.cos.setText("cos⁻¹")
+            self.tan.setText("tan⁻¹")
+            self.csc.setText("csc⁻¹")
+            self.sec.setText("sec⁻¹")
+            self.cot.setText("cot⁻¹")
+        else:
+            self.is_inverse = False
+            self.sin.setText("sin")
+            self.cos.setText("cos")
+            self.tan.setText("tan")
+            self.csc.setText("csc")
+            self.sec.setText("sec")
+            self.cot.setText("cot")
+    
+    def angle_mode(self):
+        if self.degrad.value() == 2:
+            self.mode = False
+            self.switchlabel.setText("Rad")
+        elif self.degrad.value() == 1:
+            self.mode = True
+            self.switchlabel.setText("Deg")
+
+
+    def b1(self):
+        x = self.line.text()
+        x += "1"
+        self.line.setText(x)
+    
+    def b2(self):
+        x = self.line.text()
+        x += "2"
+        self.line.setText(x)
+    
+    def b3(self):
+        x = self.line.text()
+        x += "3"
+        self.line.setText(x)
+
+    def b4(self):
+        x = self.line.text()
+        x += "4"
+        self.line.setText(x)
+
+    def b5(self):
+        x = self.line.text()
+        x += "5"
+        self.line.setText(x)
+    
+    def b6(self):
+        x = self.line.text()
+        x += "6"
+        self.line.setText(x)
+
+    def b7(self):
+        x = self.line.text()
+        x += "7"
+        self.line.setText(x)
+    
+    def b8(self):
+        x = self.line.text()
+        x += "8"
+        self.line.setText(x)
+
+    def b9(self):
+        x = self.line.text()
+        x += "9"
+        self.line.setText(x)
+    
+    def b0(self):
+        x = self.line.text()
+        x += "0"
+        self.line.setText(x)
+
+    def bdot(self):
+        x = self.line.text()
+        x += "."
+        self.line.setText(x)
+    
+    def bpi(self):
+        x = self.line.text()
+        x += "π"
+        self.line.setText(x)
+    
+    def beq(self, op):
+        x = trigerrcheck(self.line.text(),op,self.is_inverse,self.mode)
+        self.line.setText(str(x))
+
+    def makeui(self):
+        self.is_inverse = False
+        '''True is degrees mode,
+         False is Radians'''
+        self.mode = True
+        self.setStyleSheet(open('parwindowstyling.css').read())
+        self.l = QGridLayout()
+        self.one = QPushButton("1")
+        self.two = QPushButton("2")
+        self.three = QPushButton("3")
+        self.four = QPushButton("4")
+        self.five = QPushButton("5")
+        self.six = QPushButton("6")
+        self.seven = QPushButton("7")
+        self.eight = QPushButton("8")
+        self.nine = QPushButton("9")
+        self.zero = QPushButton("0")
+        self.dot = QPushButton(".")
+        self.pi = QPushButton("π")
+        self.line = QLineEdit()
+        self.sin = QPushButton("sin")
+        self.cos = QPushButton("cos")
+        self.tan = QPushButton("tan")
+        self.csc = QPushButton("csc")
+        self.sec = QPushButton("sec")
+        self.cot = QPushButton("cot")
+        self.invert = QCheckBox("Invert")
+        self.degrad = QSlider(Qt.Horizontal)
+        self.switchlabel = QLabel("Deg")
+        #slider for degrees/radians
+        self.degrad.setMaximum(2)
+        self.degrad.setMinimum(1)
+        self.degrad.setValue(1)
+
+
+        #colors
+        self.sin.setStyleSheet(open('altstyling.css').read())
+        self.cos.setStyleSheet(open('altstyling.css').read())
+        self.tan.setStyleSheet(open('altstyling.css').read())
+        self.csc.setStyleSheet(open('altstyling.css').read())
+        self.sec.setStyleSheet(open('altstyling.css').read())
+        self.cot.setStyleSheet(open('altstyling.css').read())
+        self.invert.setStyleSheet(open('altstyling.css').read())
+        self.switchlabel.setStyleSheet(open('altstyling.css').read())
+
+        self.switchlabel.setAlignment(Qt.AlignCenter)
+
+
+        self.l.addWidget(self.line,1,1,1,3)
+        self.l.addWidget(self.one,2,1)
+        self.l.addWidget(self.two,2,2)
+        self.l.addWidget(self.three,2,3)
+        self.l.addWidget(self.four,3,1)
+        self.l.addWidget(self.five,3,2)
+        self.l.addWidget(self.six,3,3)
+        self.l.addWidget(self.seven,4,1)
+        self.l.addWidget(self.eight,4,2)
+        self.l.addWidget(self.nine,4,3)
+        self.l.addWidget(self.dot,5,1)
+        self.l.addWidget(self.zero,5,2)
+        self.l.addWidget(self.pi,5,3)
+        self.l.addWidget(self.sin,6,1)
+        self.l.addWidget(self.cos,6,2)
+        self.l.addWidget(self.tan,6,3)
+        self.l.addWidget(self.csc,7,1)
+        self.l.addWidget(self.sec,7,2)
+        self.l.addWidget(self.cot,7,3)
+        self.l.addWidget(self.invert,8,1)
+        self.l.addWidget(self.switchlabel,8,3)
+        self.l.addWidget(self.degrad,8,2)
+        
+        #connections
+
+        self.invert.toggled.connect(self.inv)
+        self.degrad.valueChanged.connect(self.angle_mode)
+
+
+        self.one.clicked.connect(self.b1)
+        self.two.clicked.connect(self.b2)
+        self.three.clicked.connect(self.b3)
+        self.four.clicked.connect(self.b4)
+        self.five.clicked.connect(self.b5)
+        self.six.clicked.connect(self.b6)
+        self.seven.clicked.connect(self.b7)
+        self.eight.clicked.connect(self.b8)
+        self.nine.clicked.connect(self.b9)
+        self.zero.clicked.connect(self.b0)
+        self.dot.clicked.connect(self.bdot)
+        self.pi.clicked.connect(self.bpi)
+
+        self.sin.clicked.connect(lambda: self.beq("sin"))
+        self.cos.clicked.connect(lambda: self.beq("cos"))
+        self.tan.clicked.connect(lambda: self.beq("tan"))
+        self.csc.clicked.connect(lambda: self.beq("csc"))
+        self.sec.clicked.connect(lambda: self.beq("sec"))
+        self.cot.clicked.connect(lambda: self.beq("cot"))
+
+        #set layout
+        self.setLayout(self.l)
 
 #functions
 
@@ -182,6 +388,13 @@ def eq():
     x = line.text()
     s = solution(x)
     line.setText(str(s))
+
+def tr():   
+    global polnareff
+    polnareff = trigwin()
+    polnareff.show()
+  
+
     
 #connections
 one.clicked.connect(a1)
@@ -203,6 +416,7 @@ power.clicked.connect(apower)
 equal.clicked.connect(eq)
 clear.clicked.connect(clr)
 line.returnPressed.connect(eq)
+trig.clicked.connect(tr)
 
 win.show()
 sys.exit(ap.exec_())
