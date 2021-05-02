@@ -198,6 +198,9 @@ class trigwin(QWidget):
         self.line.setText(str(x))
 
     def makeui(self):
+
+        self.setWindowTitle("Trigonometry")
+        self.setWindowIcon(QtGui.QIcon('trigicon.png'))
         self.is_inverse = False
         '''True is degrees mode,
          False is Radians'''
