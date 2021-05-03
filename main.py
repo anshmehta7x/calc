@@ -47,6 +47,7 @@ equal = QPushButton("=")
 power = QPushButton("^")
 clear = QPushButton("CLR")
 trig = QPushButton("Trig")
+log = QPushButton("Log")
 
 #coloring
 one.setStyleSheet(open('styling.css').read())
@@ -69,6 +70,8 @@ power.setStyleSheet(open('altstyling.css').read())
 clear.setStyleSheet(open('parwindowstyling.css').read())
 trig.setStyleSheet(open('parwindowstyling.css').read())
 line.setStyleSheet(open('styling.css').read())
+log.setStyleSheet(open('parwindowstyling.css').read())
+
 
 #row 1
 lay.addWidget(line,1,1,2,4)
@@ -96,7 +99,9 @@ lay.addWidget(divide,6,4)
 lay.addWidget(equal,7,1,1,3)
 lay.addWidget(clear,7,4)
 #row 7
-lay.addWidget(trig,8,1,1,4)
+lay.addWidget(trig,8,1,1,2)
+lay.addWidget(log,8,3,1,2)
+
 
 
 #trig window
@@ -300,6 +305,17 @@ class trigwin(QWidget):
         #set layout
         self.setLayout(self.l)
 
+#log window
+class logwin(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.makeui()
+    
+    def makeui(self):
+        self.setWindowTitle("Logarithms")
+
+
 #functions
 
 def a1():
@@ -396,7 +412,11 @@ def tr():
     global polnareff
     polnareff = trigwin()
     polnareff.show()
-  
+
+def lo():
+    global kakyoin
+    kakyoin = logwin()
+    kakyoin.show()
 
     
 #connections
@@ -420,6 +440,7 @@ equal.clicked.connect(eq)
 clear.clicked.connect(clr)
 line.returnPressed.connect(eq)
 trig.clicked.connect(tr)
+log.clicked.connect(lo)
 
 win.show()
 sys.exit(ap.exec_())
