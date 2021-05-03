@@ -1,6 +1,8 @@
 import sys
+
 from operations import solution
 from operations import trigerrcheck
+from operations import logsolve
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QLabel
@@ -10,9 +12,8 @@ from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtWidgets import QSlider
+
 from PyQt5 import QtGui
-
-
 from PyQt5.Qt import Qt
 
 ap = QApplication([])
@@ -311,8 +312,43 @@ class logwin(QWidget):
     def __init__(self):
         super().__init__()
         self.makeui()
-    
+
+    #functions
+    def switch(self):
+        if self.inpbase == True:
+            self.inpORbase.setText("base")
+            self.inpORbase.setStyleSheet(open("styling.css").read())
+            self.inpbase = False
+
+        elif self.inpbase == False:
+            self.inpORbase.setText("input")
+            self.inpORbase.setStyleSheet(open("altstyling.css").read())
+            self.inpbase = True
+
+    def c(self, num):
+        numb = str(num)
+        if self.inpbase == True:
+            x = self.inp.text()
+            x += numb
+            self.inp.setText(x)
+        elif self.inpbase == False:
+            x = self.base.text()
+            x += numb
+            self.base.setText(x)
+
+    def out(self):
+        i = self.inp.text()
+        b = self.base.text()
+        to_set = logsolve(i,b)
+        self.output.setText(str(to_set))
+
+        
     def makeui(self):
+
+        self.inpbase = True
+        ''' True is input
+            False is base'''
+
         self.setWindowTitle("Logarithms")
         self.setStyleSheet(open('parwindowstyling.css').read())
         self.l = QGridLayout()
@@ -323,7 +359,7 @@ class logwin(QWidget):
         self.inp = QLineEdit()
         self.baselabel = QLabel("Base:")
         self.base = QLineEdit()
-        self.outputlabel = QLabel("Output")
+        self.outputlabel = QLabel("Output:")
         self.output = QLabel()
 
         #numbers
@@ -339,6 +375,14 @@ class logwin(QWidget):
         self.zero = QPushButton("0")
         self.dot = QPushButton(".")
         self.e = QPushButton("e")
+
+        #equal
+        self.equal = QPushButton("=")
+        self.equal.setStyleSheet(open("altstyling.css").read())
+
+        #switch
+        self.inpORbase = QPushButton("input")
+        self.inpORbase.setStyleSheet(open("altstyling.css").read())
 
         #layout
         self.l.addWidget(self.inplabel,1,1)
@@ -357,8 +401,27 @@ class logwin(QWidget):
         self.l.addWidget(self.eight,6,2)
         self.l.addWidget(self.nine,6,3)
         self.l.addWidget(self.dot,7,1)
-        self.l.addWidget(self.zero,7,2)
+        self.l.addWidget(self.zero,7,2) 
         self.l.addWidget(self.e,7,3)
+        self.l.addWidget(self.equal,8,1,1,2)
+        self.l.addWidget(self.inpORbase,8,3)
+
+        #connections
+        self.inpORbase.clicked.connect(lambda: self.switch())
+        self.equal.clicked.connect(lambda: self.out())
+        self.one.clicked.connect(lambda: self.c(1))
+        self.two.clicked.connect(lambda: self.c(2))
+        self.three.clicked.connect(lambda: self.c(3))
+        self.four.clicked.connect(lambda: self.c(4))
+        self.five.clicked.connect(lambda: self.c(5))
+        self.six.clicked.connect(lambda: self.c(6))
+        self.seven.clicked.connect(lambda: self.c(7))
+        self.eight.clicked.connect(lambda: self.c(8))
+        self.nine.clicked.connect(lambda: self.c(9))
+        self.zero.clicked.connect(lambda: self.c(0))
+        self.dot.clicked.connect(lambda: self.c("."))
+        self.e.clicked.connect(lambda: self.c("e"))
+
 
 #functions
 
@@ -488,4 +551,3 @@ log.clicked.connect(lo)
 
 win.show()
 sys.exit(ap.exec_())
-

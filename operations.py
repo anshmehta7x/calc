@@ -252,9 +252,6 @@ def trigsolve(mainstr,func,inverse,mode):
             else:
                 return round(x,4)
 
-
-        
-
 def trigerrcheck(mainstr,func,inverse,mode):
 
     t1 = re.search('[a-zA-Z]', str(mainstr))
@@ -271,4 +268,25 @@ def trigerrcheck(mainstr,func,inverse,mode):
     
     return trigsolve(mainstr,func,inverse,mode)
 
+def logsolve(inpval, base):
+    if "e" in inpval:
+        if inpval == "e":
+            i = math.e
+        else:
+            x = inpval.replace("e","")
+            i = float(x) * math.e
     
+    else:
+        i = float(inpval)
+    
+    if "e" in base:
+        if base == "e":
+            b = math.e
+        else:
+            y = base.replace("e","")
+            b = float(y) * math.e
+    
+    else:
+        b = float(base)
+    
+    return math.log(i,b)
