@@ -314,7 +314,51 @@ class logwin(QWidget):
     
     def makeui(self):
         self.setWindowTitle("Logarithms")
+        self.setStyleSheet(open('parwindowstyling.css').read())
+        self.l = QGridLayout()
+        self.setLayout(self.l)
 
+        #input fields
+        self.inplabel = QLabel("Input:")
+        self.inp = QLineEdit()
+        self.baselabel = QLabel("Base:")
+        self.base = QLineEdit()
+        self.outputlabel = QLabel("Output")
+        self.output = QLabel()
+
+        #numbers
+        self.one = QPushButton("1")
+        self.two = QPushButton("2")
+        self.three = QPushButton("3")
+        self.four = QPushButton("4")
+        self.five = QPushButton("5")
+        self.six = QPushButton("6")
+        self.seven = QPushButton("7")
+        self.eight = QPushButton("8")
+        self.nine = QPushButton("9")
+        self.zero = QPushButton("0")
+        self.dot = QPushButton(".")
+        self.e = QPushButton("e")
+
+        #layout
+        self.l.addWidget(self.inplabel,1,1)
+        self.l.addWidget(self.inp,1,2,1,2)
+        self.l.addWidget(self.baselabel,2,1)
+        self.l.addWidget(self.base,2,2,1,2)
+        self.l.addWidget(self.outputlabel,3,1)
+        self.l.addWidget(self.output,3,2,1,2)
+        self.l.addWidget(self.one,4,1)
+        self.l.addWidget(self.two,4,2)
+        self.l.addWidget(self.three,4,3)
+        self.l.addWidget(self.four,5,1)
+        self.l.addWidget(self.five,5,2)
+        self.l.addWidget(self.six,5,3)
+        self.l.addWidget(self.seven,6,1)
+        self.l.addWidget(self.eight,6,2)
+        self.l.addWidget(self.nine,6,3)
+        self.l.addWidget(self.dot,7,1)
+        self.l.addWidget(self.zero,7,2)
+        self.l.addWidget(self.e,7,3)
 
 #functions
 
