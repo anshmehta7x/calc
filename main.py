@@ -26,7 +26,6 @@ lay = QGridLayout()
 win.setLayout(lay)
 #win.setGeometry(150,150,400,600)
 
-
 #buttons
 line = QLineEdit()
 one = QPushButton("1")
@@ -72,7 +71,6 @@ clear.setStyleSheet(open('styles/parwindowstyling.css').read())
 trig.setStyleSheet(open('styles/parwindowstyling.css').read())
 line.setStyleSheet(open("styles/styling.css").read())
 log.setStyleSheet(open('styles/parwindowstyling.css').read())
-
 
 #row 1
 lay.addWidget(line,1,1,2,4)
@@ -137,67 +135,12 @@ class trigwin(QWidget):
         elif self.degrad.value() == 1:
             self.mode = True
             self.switchlabel.setText("Deg")
-
-
-    def b1(self):
-        x = self.line.text()
-        x += "1"
-        self.line.setText(x)
-    
-    def b2(self):
-        x = self.line.text()
-        x += "2"
-        self.line.setText(x)
-    
-    def b3(self):
-        x = self.line.text()
-        x += "3"
-        self.line.setText(x)
-
-    def b4(self):
-        x = self.line.text()
-        x += "4"
-        self.line.setText(x)
-
-    def b5(self):
-        x = self.line.text()
-        x += "5"
-        self.line.setText(x)
-    
-    def b6(self):
-        x = self.line.text()
-        x += "6"
-        self.line.setText(x)
-
-    def b7(self):
-        x = self.line.text()
-        x += "7"
-        self.line.setText(x)
-    
-    def b8(self):
-        x = self.line.text()
-        x += "8"
-        self.line.setText(x)
-
-    def b9(self):
-        x = self.line.text()
-        x += "9"
-        self.line.setText(x)
-    
-    def b0(self):
-        x = self.line.text()
-        x += "0"
-        self.line.setText(x)
-
-    def bdot(self):
-        x = self.line.text()
-        x += "."
-        self.line.setText(x)
-    
-    def bpi(self):
-        x = self.line.text()
-        x += "π"
-        self.line.setText(x)
+        
+    def b(self, numbr):
+        x = str(numbr)
+        y = self.line.text()
+        y += x
+        self.line.setText(y)
     
     def beq(self, op):
         x = trigerrcheck(self.line.text(),op,self.is_inverse,self.mode)
@@ -283,18 +226,18 @@ class trigwin(QWidget):
         self.degrad.valueChanged.connect(self.angle_mode)
 
 
-        self.one.clicked.connect(self.b1)
-        self.two.clicked.connect(self.b2)
-        self.three.clicked.connect(self.b3)
-        self.four.clicked.connect(self.b4)
-        self.five.clicked.connect(self.b5)
-        self.six.clicked.connect(self.b6)
-        self.seven.clicked.connect(self.b7)
-        self.eight.clicked.connect(self.b8)
-        self.nine.clicked.connect(self.b9)
-        self.zero.clicked.connect(self.b0)
-        self.dot.clicked.connect(self.bdot)
-        self.pi.clicked.connect(self.bpi)
+        self.one.clicked.connect(lambda: self.b(1))
+        self.two.clicked.connect(lambda: self.b(2))
+        self.three.clicked.connect(lambda: self.b(3))
+        self.four.clicked.connect(lambda: self.b(4))
+        self.five.clicked.connect(lambda: self.b(5))
+        self.six.clicked.connect(lambda: self.b(6))
+        self.seven.clicked.connect(lambda: self.b(7))
+        self.eight.clicked.connect(lambda: self.b(8))
+        self.nine.clicked.connect(lambda: self.b(9))
+        self.zero.clicked.connect(lambda: self.b(0))
+        self.dot.clicked.connect(lambda: self.b("."))
+        self.pi.clicked.connect(lambda: self.b("π"))
 
         self.sin.clicked.connect(lambda: self.beq("sin"))
         self.cos.clicked.connect(lambda: self.beq("cos"))
@@ -422,91 +365,15 @@ class logwin(QWidget):
         self.zero.clicked.connect(lambda: self.c(0))
         self.dot.clicked.connect(lambda: self.c("."))
         self.e.clicked.connect(lambda: self.c("e"))
-
+######################## logwin end
 
 #functions
 
-def a1():
-    x = line.text()
-    x += "1"
-    line.setText(x)
-    
-
-def a2():
-    x = line.text()
-    x += "2"
-    line.setText(x)
-    
-
-def a3():
-    x = line.text()
-    x += "3"
-    line.setText(x)
-
-def a4():
-    x = line.text()
-    x += "4"
-    line.setText(x)
-
-def a5():
-    x = line.text()
-    x += "5"
-    line.setText(x)
-
-def a6():
-    x = line.text()
-    x += "6"
-    line.setText(x)
-
-def a7():
-    x = line.text()
-    x += "7"
-    line.setText(x)
-
-def a8():
-    x = line.text()
-    x += "8"
-    line.setText(x)
-
-def a9():
-    x = line.text()
-    x += "9"
-    line.setText(x)
-
-def a0():
-    x = line.text()
-    x += "0"
-    line.setText(x)
-
-def aplus():
-    x = line.text()
-    x += "+"
-    line.setText(x)
-
-def aminus():
-    x = line.text()
-    x += "-"
-    line.setText(x)
-
-def amult():
-    x = line.text()
-    x += "x"
-    line.setText(x)
-
-def adiv():
-    x = line.text()
-    x += "÷"
-    line.setText(x)
-
-def adot():
-    x = line.text()
-    x += "."
-    line.setText(x)
-
-def apower():
-    x = line.text()
-    x += "^"
-    line.setText(x)
+def a(n):
+    x = str(n)
+    y = line.text()
+    y += x
+    line.setText(y)
 
 def clr():
     line.setText("")
@@ -526,24 +393,24 @@ def lo():
     kakyoin = logwin()
     kakyoin.show()
 
-    
 #connections
-one.clicked.connect(a1)
-two.clicked.connect(a2)
-three.clicked.connect(a3)
-four.clicked.connect(a4)
-five.clicked.connect(a5)
-six.clicked.connect(a6)
-seven.clicked.connect(a7)
-eight.clicked.connect(a8)
-nine.clicked.connect(a9)
-zero.clicked.connect(a0)
-dot.clicked.connect(adot)
-plus.clicked.connect(aplus)
-minus.clicked.connect(aminus)
-multiply.clicked.connect(amult)
-divide.clicked.connect(adiv)
-power.clicked.connect(apower)
+
+one.clicked.connect(lambda: a(1))
+two.clicked.connect(lambda: a(2))
+three.clicked.connect(lambda: a(3))
+four.clicked.connect(lambda: a(4))
+five.clicked.connect(lambda: a(5))
+six.clicked.connect(lambda: a(6))
+seven.clicked.connect(lambda: a(7))
+eight.clicked.connect(lambda: a(8))
+nine.clicked.connect(lambda: a(9))
+zero.clicked.connect(lambda: a(0))
+dot.clicked.connect(lambda: a("."))
+plus.clicked.connect(lambda: a("+"))
+minus.clicked.connect(lambda: a("-"))
+multiply.clicked.connect(lambda: a("x"))
+divide.clicked.connect(lambda: a("÷"))
+power.clicked.connect(lambda: a("^"))
 equal.clicked.connect(eq)
 clear.clicked.connect(clr)
 line.returnPressed.connect(eq)
