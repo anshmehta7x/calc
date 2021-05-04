@@ -19,9 +19,9 @@ from PyQt5.Qt import Qt
 ap = QApplication([])
 win =  QWidget()
 
-win.setStyleSheet(open('parwindowstyling.css').read())
+win.setStyleSheet(open('styles/parwindowstyling.css').read())
 win.setWindowTitle("Calculator")
-win.setWindowIcon(QtGui.QIcon('icon.png'))
+win.setWindowIcon(QtGui.QIcon('assets/icon.png'))
 lay = QGridLayout()
 win.setLayout(lay)
 #win.setGeometry(150,150,400,600)
@@ -51,27 +51,27 @@ trig = QPushButton("Trig")
 log = QPushButton("Log")
 
 #coloring
-one.setStyleSheet(open('styling.css').read())
-two.setStyleSheet(open('styling.css').read())
-three.setStyleSheet(open('styling.css').read())
-four.setStyleSheet(open('styling.css').read())
-five.setStyleSheet(open('styling.css').read())
-six.setStyleSheet(open('styling.css').read())
-seven.setStyleSheet(open('styling.css').read())
-eight.setStyleSheet(open('styling.css').read())
-nine.setStyleSheet(open('styling.css').read())
-zero.setStyleSheet(open('styling.css').read())
-dot.setStyleSheet(open('styling.css').read())
-plus.setStyleSheet(open('altstyling.css').read())
-minus.setStyleSheet(open('altstyling.css').read())
-multiply.setStyleSheet(open('altstyling.css').read())
-divide.setStyleSheet(open('altstyling.css').read())
-equal.setStyleSheet(open('altstyling.css').read())
-power.setStyleSheet(open('altstyling.css').read())
-clear.setStyleSheet(open('parwindowstyling.css').read())
-trig.setStyleSheet(open('parwindowstyling.css').read())
-line.setStyleSheet(open('styling.css').read())
-log.setStyleSheet(open('parwindowstyling.css').read())
+one.setStyleSheet(open("styles/styling.css").read())
+two.setStyleSheet(open("styles/styling.css").read())
+three.setStyleSheet(open("styles/styling.css").read())
+four.setStyleSheet(open("styles/styling.css").read())
+five.setStyleSheet(open("styles/styling.css").read())
+six.setStyleSheet(open("styles/styling.css").read())
+seven.setStyleSheet(open("styles/styling.css").read())
+eight.setStyleSheet(open("styles/styling.css").read())
+nine.setStyleSheet(open("styles/styling.css").read())
+zero.setStyleSheet(open("styles/styling.css").read())
+dot.setStyleSheet(open("styles/styling.css").read())
+plus.setStyleSheet(open("styles/altstyling.css").read())
+minus.setStyleSheet(open("styles/altstyling.css").read())
+multiply.setStyleSheet(open("styles/altstyling.css").read())
+divide.setStyleSheet(open("styles/altstyling.css").read())
+equal.setStyleSheet(open("styles/altstyling.css").read())
+power.setStyleSheet(open("styles/altstyling.css").read())
+clear.setStyleSheet(open('styles/parwindowstyling.css').read())
+trig.setStyleSheet(open('styles/parwindowstyling.css').read())
+line.setStyleSheet(open("styles/styling.css").read())
+log.setStyleSheet(open('styles/parwindowstyling.css').read())
 
 
 #row 1
@@ -206,12 +206,12 @@ class trigwin(QWidget):
     def makeui(self):
 
         self.setWindowTitle("Trigonometry")
-        self.setWindowIcon(QtGui.QIcon('trigicon.png'))
+        self.setWindowIcon(QtGui.QIcon('assets/trigicon.png'))
         self.is_inverse = False
         '''True is degrees mode,
          False is Radians'''
         self.mode = True
-        self.setStyleSheet(open('parwindowstyling.css').read())
+        self.setStyleSheet(open('styles/parwindowstyling.css').read())
         self.l = QGridLayout()
         self.one = QPushButton("1")
         self.two = QPushButton("2")
@@ -242,14 +242,14 @@ class trigwin(QWidget):
 
 
         #colors
-        self.sin.setStyleSheet(open('altstyling.css').read())
-        self.cos.setStyleSheet(open('altstyling.css').read())
-        self.tan.setStyleSheet(open('altstyling.css').read())
-        self.csc.setStyleSheet(open('altstyling.css').read())
-        self.sec.setStyleSheet(open('altstyling.css').read())
-        self.cot.setStyleSheet(open('altstyling.css').read())
-        self.invert.setStyleSheet(open('altstyling.css').read())
-        self.switchlabel.setStyleSheet(open('altstyling.css').read())
+        self.sin.setStyleSheet(open("styles/altstyling.css").read())
+        self.cos.setStyleSheet(open("styles/altstyling.css").read())
+        self.tan.setStyleSheet(open("styles/altstyling.css").read())
+        self.csc.setStyleSheet(open("styles/altstyling.css").read())
+        self.sec.setStyleSheet(open("styles/altstyling.css").read())
+        self.cot.setStyleSheet(open("styles/altstyling.css").read())
+        self.invert.setStyleSheet(open("styles/altstyling.css").read())
+        self.switchlabel.setStyleSheet(open("styles/altstyling.css").read())
 
         self.switchlabel.setAlignment(Qt.AlignCenter)
 
@@ -317,12 +317,12 @@ class logwin(QWidget):
     def switch(self):
         if self.inpbase == True:
             self.inpORbase.setText("base")
-            self.inpORbase.setStyleSheet(open("styling.css").read())
+            self.inpORbase.setStyleSheet(open("styles/styling.css").read())
             self.inpbase = False
 
         elif self.inpbase == False:
             self.inpORbase.setText("input")
-            self.inpORbase.setStyleSheet(open("altstyling.css").read())
+            self.inpORbase.setStyleSheet(open("styles/altstyling.css").read())
             self.inpbase = True
 
     def c(self, num):
@@ -350,7 +350,8 @@ class logwin(QWidget):
             False is base'''
 
         self.setWindowTitle("Logarithms")
-        self.setStyleSheet(open('parwindowstyling.css').read())
+        self.setStyleSheet(open('styles/parwindowstyling.css').read())
+        self.setWindowIcon(QtGui.QIcon("assets/logicon.png"))
         self.l = QGridLayout()
         self.setLayout(self.l)
 
@@ -378,11 +379,11 @@ class logwin(QWidget):
 
         #equal
         self.equal = QPushButton("=")
-        self.equal.setStyleSheet(open("altstyling.css").read())
+        self.equal.setStyleSheet(open("styles/altstyling.css").read())
 
         #switch
         self.inpORbase = QPushButton("input")
-        self.inpORbase.setStyleSheet(open("altstyling.css").read())
+        self.inpORbase.setStyleSheet(open("styles/altstyling.css").read())
 
         #layout
         self.l.addWidget(self.inplabel,1,1)
