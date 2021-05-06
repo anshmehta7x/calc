@@ -16,6 +16,10 @@ from PyQt5.QtWidgets import QSlider
 from PyQt5 import QtGui
 from PyQt5.Qt import Qt
 
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+import matplotlib.pyplot as plt
+
 ap = QApplication([])
 win =  QWidget()
 
@@ -48,6 +52,7 @@ power = QPushButton("^")
 clear = QPushButton("CLR")
 trig = QPushButton("Trig")
 log = QPushButton("Log")
+quad = QPushButton("Quadratic")
 
 #coloring
 one.setStyleSheet(open("styles/styling.css").read())
@@ -71,6 +76,7 @@ clear.setStyleSheet(open('styles/parwindowstyling.css').read())
 trig.setStyleSheet(open('styles/parwindowstyling.css').read())
 line.setStyleSheet(open("styles/styling.css").read())
 log.setStyleSheet(open('styles/parwindowstyling.css').read())
+quad.setStyleSheet(open('styles/parwindowstyling.css').read())
 
 #row 1
 lay.addWidget(line,1,1,2,4)
@@ -100,6 +106,8 @@ lay.addWidget(clear,7,4)
 #row 7
 lay.addWidget(trig,8,1,1,2)
 lay.addWidget(log,8,3,1,2)
+#row 8
+lay.addWidget(quad,9,1,1,4)
 
 
 
@@ -353,20 +361,117 @@ class logwin(QWidget):
         #connections
         self.inpORbase.clicked.connect(lambda: self.switch())
         self.equal.clicked.connect(lambda: self.out())
-        self.one.clicked.connect(lambda: self.c(1))
-        self.two.clicked.connect(lambda: self.c(2))
-        self.three.clicked.connect(lambda: self.c(3))
-        self.four.clicked.connect(lambda: self.c(4))
-        self.five.clicked.connect(lambda: self.c(5))
-        self.six.clicked.connect(lambda: self.c(6))
-        self.seven.clicked.connect(lambda: self.c(7))
-        self.eight.clicked.connect(lambda: self.c(8))
-        self.nine.clicked.connect(lambda: self.c(9))
-        self.zero.clicked.connect(lambda: self.c(0))
-        self.dot.clicked.connect(lambda: self.c("."))
         self.e.clicked.connect(lambda: self.c("e"))
 ######################## logwin end
 
+class quadwin(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.makeui()
+
+    def operation(self):
+        print("yeet")
+        pass
+        
+    def clr(self):
+        self.abox.setText("")
+        self.bbox.setText("")
+        self.cbox.setText("")
+    
+    def setbox(self,mode):
+        if mode == "a":
+            self.mode = self.abox
+        elif mode == "b":
+            self.mode = self.bbox
+        else:
+            self.mode = self.cbox
+
+    def d(self,numbr):
+        x = str(numbr)
+        y = self.mode.text()
+        y += x
+        self.mode.setText(y)
+
+    def makeui(self):
+        
+        self.setWindowTitle("Quadratics")
+        self.l = QGridLayout()
+        self.setLayout(self.l)
+        self.setStyleSheet(open('styles/parwindowstyling.css').read())
+
+        #fields
+        self.toplabel = QLabel("a𝑥²+b𝑥+c")
+        self.guidelabel = QLabel("Enter value for:")
+        self.alabel = QPushButton("    a :")
+        self.abox = QLineEdit()
+        self.blabel = QPushButton("    b :")
+        self.bbox = QLineEdit()
+        self.clabel = QPushButton("    c :")
+        self.cbox = QLineEdit()
+        self.equal = QPushButton("=")
+        self.output = QLabel("")
+        self.clear = QPushButton("CLR")
+        self.equal.setStyleSheet(open("styles/altstyling.css").read())
+        self.clear.setStyleSheet(open("styles/altstyling.css").read())
+        self.alabel.setStyleSheet(open("styles/styling.css").read())
+        self.blabel.setStyleSheet(open("styles/styling.css").read())
+        self.clabel.setStyleSheet(open("styles/styling.css").read())
+
+        #defaut config
+        self.mode = self.alabel
+        
+        #nuumbers
+        self.one = QPushButton("1")
+        self.two = QPushButton("2")
+        self.three = QPushButton("3")
+        self.four = QPushButton("4")
+        self.five = QPushButton("5")
+        self.six = QPushButton("6")
+        self.seven = QPushButton("7")
+        self.eight = QPushButton("8")
+        self.nine = QPushButton("9")
+        self.zero = QPushButton("0")
+        self.dot = QPushButton(".")
+
+        #layout
+        self.l.addWidget(self.toplabel,1,1,1,3)
+        self.l.addWidget(self.guidelabel,2,1,1,3)
+        self.l.addWidget(self.alabel,3,1)
+        self.l.addWidget(self.abox,3,2,1,2)
+        self.l.addWidget(self.blabel,4,1)
+        self.l.addWidget(self.bbox,4,2,1,2)
+        self.l.addWidget(self.clabel,5,1)
+        self.l.addWidget(self.cbox,5,2,1,2)
+        self.l.addWidget(self.equal,6,1,1,3)
+        self.l.addWidget(self.one,8,1)
+        self.l.addWidget(self.two,8,2)
+        self.l.addWidget(self.three,8,3)
+        self.l.addWidget(self.four,9,1)
+        self.l.addWidget(self.five,9,2)
+        self.l.addWidget(self.six,9,3)
+        self.l.addWidget(self.seven,10,1)
+        self.l.addWidget(self.eight,10,2)
+        self.l.addWidget(self.nine,10,3)
+        self.l.addWidget(self.dot,11,1)
+        self.l.addWidget(self.zero,11,2)
+        self.l.addWidget(self.clear,11,3)
+
+        self.clear.clicked.connect(self.clr)
+        self.equal.clicked.connect(lambda: self.operation())
+        self.alabel.clicked.connect(lambda: self.setbox("a"))
+        self.blabel.clicked.connect(lambda: self.setbox("b"))
+        self.clabel.clicked.connect(lambda: self.setbox("c"))
+        self.one.clicked.connect(lambda: self.d(1))
+        self.two.clicked.connect(lambda: self.d(2))
+        self.three.clicked.connect(lambda: self.d(3))
+        self.four.clicked.connect(lambda: self.d(4))
+        self.five.clicked.connect(lambda: self.d(5))
+        self.six.clicked.connect(lambda: self.d(6))
+        self.seven.clicked.connect(lambda: self.d(7))
+        self.eight.clicked.connect(lambda: self.d(8))
+        self.nine.clicked.connect(lambda: self.d(9))
+        self.zero.clicked.connect(lambda: self.d(0))
+        self.dot.clicked.connect(lambda: self.d("."))
 #functions
 
 def a(n):
@@ -393,6 +498,11 @@ def lo():
     kakyoin = logwin()
     kakyoin.show()
 
+def qu():
+    global speedwagon
+    speedwagon = quadwin()
+    speedwagon.show()
+
 #connections
 
 one.clicked.connect(lambda: a(1))
@@ -416,6 +526,7 @@ clear.clicked.connect(clr)
 line.returnPressed.connect(eq)
 trig.clicked.connect(tr)
 log.clicked.connect(lo)
+quad.clicked.connect(qu)
 
 win.show()
 sys.exit(ap.exec_())

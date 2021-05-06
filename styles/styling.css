@@ -16,3 +16,10 @@ QlineEdit{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
+
+QLabel{
+    font-size: 23px;
+    border-color: navy;
+    color: red;
+
+}
