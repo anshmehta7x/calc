@@ -320,7 +320,7 @@ def q(a,b,c):
             r2 = "+"+r2
         
         z = "(x{})(x{})".format(r1,r2)
-        mainstr = "root 1: {} \nroot 2: {} \n{}".format(str(root1),str(root2),z)
+        mainstr = "Root 1: {} \nRoot 2: {} \n{}".format(str(root1),str(root2),z)
         return mainstr
     
 def validity(a,b,c):

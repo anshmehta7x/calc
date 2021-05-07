@@ -1,25 +1,18 @@
 import sys
+import os
 
 from operations import solution
 from operations import trigerrcheck
 from operations import logsolve
 from operations import q
 
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QLineEdit
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QCheckBox
-from PyQt5.QtWidgets import QSlider
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QLineEdit,QPushButton,QCheckBox,QSlider
 
 from PyQt5 import QtGui
 from PyQt5.Qt import Qt
 
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as pp
+import numpy
 
 ap = QApplication([])
 win =  QWidget()
@@ -368,6 +361,12 @@ class logwin(QWidget):
 class quadwin(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.setWindowTitle("Quadratics")
+        self.l = QGridLayout()
+        self.setLayout(self.l)
+        self.setStyleSheet(open('styles/parwindowstyling.css').read())
+
         self.makeui()
 
     def operation(self):
@@ -387,14 +386,39 @@ class quadwin(QWidget):
 
         stat = str(float(a)) + " 𝑥² "+ bsign + " " + str(abs(float(b))) + " 𝑥 "+ csign + " " + str(abs(float(c)))
 
+        try:
+            A = float(a)
+            B = float(b)
+            C = float(c)
+        except:
+            pass
+
+        maxmin = -B/(2*A)
+        front = maxmin + 2.5*(maxmin)
+        back = maxmin - 2.5*(maxmin)
+
+        x = numpy.linspace(back,front,20)
+
+        y = A*(x**2) + B*x + C
+
+        fig = pp.figure(figsize=(8,5))
+        fig.set_facecolor('#66cdaa')
+        ax = pp.axes()
+        ax.set_facecolor('#66cdaa')
+        pp.plot(x,y,'#006400')
+        pp.savefig('sus.png')
+
         self.statement = QLabel(stat)
+        self.maximaminima = QLabel("Maxima/minima at: x= {}".format(str(maxmin)))
         self.statement.setAlignment(Qt.AlignCenter)
+        self.statement.setStyleSheet(open('styles/styling.css').read())
         self.output = QLabel(q(a,b,c))
         self.graph = QLabel("")
+        pmap =  QtGui.QPixmap('sus.png')
+        os.remove('sus.png')
+        self.graph.setPixmap(pmap)
+        self.rst = QPushButton("Reset")
         self.outui()
-        #self.l.addWidget(self.output,12,1,1,3)
-        #self.l.addWidget(self.graph,13,1,1,3)
-        
         
     def clr(self):
         self.abox.setText("")
@@ -417,14 +441,14 @@ class quadwin(QWidget):
         self.mode.setText(y)
 
     def makeui(self):
-        
-        self.setWindowTitle("Quadratics")
-        self.l = QGridLayout()
-        self.setLayout(self.l)
-        self.setStyleSheet(open('styles/parwindowstyling.css').read())
-
+        self.resize(200,300)
+        try:
+            self.clearLayout(self.l)
+        except:
+            pass
         #fields
         self.toplabel = QLabel("a𝑥²+b𝑥+c")
+        self.toplabel.setAlignment(Qt.AlignCenter)
         self.guidelabel = QLabel("Enter value for:")
         self.alabel = QPushButton("    a :")
         self.abox = QLineEdit()
@@ -497,33 +521,28 @@ class quadwin(QWidget):
         self.dot.clicked.connect(lambda: self.d("."))
     
     def outui(self):
-        
-        self.l.removeWidget(self.toplabel)
-        self.l.removeWidget(self.guidelabel)
-        self.l.removeWidget(self.alabel)
-        self.l.removeWidget(self.abox)
-        self.l.removeWidget(self.blabel)
-        self.l.removeWidget(self.bbox)
-        self.l.removeWidget(self.clabel)
-        self.l.removeWidget(self.cbox)
-        self.l.removeWidget(self.equal)
-        self.l.removeWidget(self.one)
-        self.l.removeWidget(self.two)
-        self.l.removeWidget(self.three)
-        self.l.removeWidget(self.four)
-        self.l.removeWidget(self.five)
-        self.l.removeWidget(self.six)
-        self.l.removeWidget(self.seven)
-        self.l.removeWidget(self.eight)
-        self.l.removeWidget(self.nine)
-        self.l.removeWidget(self.dot)
-        self.l.removeWidget(self.zero)
-        self.l.removeWidget(self.clear)
+        self.clearLayout(self.l)
 
-        self.l.addWidget(self.statement,1,1)
-        self.l.addWidget(self.output,2,1)
-        print("bruh")
+        self.l.addWidget(self.statement,1,1,1,3)
+        self.l.addWidget(self.output,3,1)
+        self.l.addWidget(self.graph,2,1,1,3)
+        self.l.addWidget(self.maximaminima,3,2)
+        self.l.addWidget(self.rst,3,3)
+
+        self.rst.clicked.connect(self.makeui)
+
+
         
+        print("bruh")
+    
+    def clearLayout(self,layout):
+        if layout is not None:
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget() is not None:
+                    child.widget().deleteLater()
+                elif child.layout() is not None:
+                    self.clearLayout(child.layout())
 #functions
 
 def a(n):
