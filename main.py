@@ -530,10 +530,6 @@ class quadwin(QWidget):
         self.l.addWidget(self.rst,3,3)
 
         self.rst.clicked.connect(self.makeui)
-
-
-        
-        print("bruh")
     
     def clearLayout(self,layout):
         if layout is not None:

@@ -300,7 +300,6 @@ def q(a,b,c):
     except TypeError or ValueError:
         return "Enter numbers only!"
     
-    print(validity(A,B,C))
     if validity(A,B,C) == "sus":
         return "Equation does not have real roots"
 
@@ -325,7 +324,7 @@ def q(a,b,c):
     
 def validity(a,b,c):
     disc = (b**2)-4*a*c
-    print(disc)
+    
     if disc == 0.0:
         return disc
     else:
