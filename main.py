@@ -66,7 +66,7 @@ multiply.setStyleSheet(open("styles/altstyling.css").read())
 divide.setStyleSheet(open("styles/altstyling.css").read())
 equal.setStyleSheet(open("styles/altstyling.css").read())
 power.setStyleSheet(open("styles/altstyling.css").read())
-clear.setStyleSheet(open('styles/parwindowstyling.css').read())
+clear.setStyleSheet(open('styles/altstyling.css').read())
 trig.setStyleSheet(open('styles/parwindowstyling.css').read())
 line.setStyleSheet(open("styles/styling.css").read())
 log.setStyleSheet(open('styles/parwindowstyling.css').read())
@@ -362,10 +362,11 @@ class quadwin(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Quadratics")
+        self.setWindowTitle("Quadratic Equations")
         self.l = QGridLayout()
         self.setLayout(self.l)
         self.setStyleSheet(open('styles/parwindowstyling.css').read())
+        self.setWindowIcon(QtGui.QIcon('assets/quadicon.png'))
 
         self.makeui()
 
