@@ -290,3 +290,46 @@ def logsolve(inpval, base):
         b = float(base)
     
     return math.log(i,b)
+
+def q(a,b,c):
+    try:
+        A = float(a)
+        B = float(b)
+        C = float(c)
+
+    except TypeError or ValueError:
+        return "Enter numbers only!"
+    
+    print(validity(A,B,C))
+    if validity(A,B,C) == "sus":
+        return "Equation does not have real roots"
+
+    else: 
+        r = validity(A,B,C)
+        root1 = round(((-1*B)+(r**0.5))/(2*A),4)
+        root2 = round(((-1*B)-(r**0.5))/(2*A),4)
+        r1 = str(-1*root1)
+        if root1 > 0:
+            r1 = r1
+        else:
+            r1 = "+"+r1
+        r2 = str(-1*root2)
+        if root2 > 0:
+            r2 = r2
+        else:
+            r2 = "+"+r2
+        
+        z = "(x{})(x{})".format(r1,r2)
+        mainstr = "root 1: {} \nroot 2: {} \n{}".format(str(root1),str(root2),z)
+        return mainstr
+    
+def validity(a,b,c):
+    disc = (b**2)-4*a*c
+    print(disc)
+    if disc == 0.0:
+        return disc
+    else:
+        if disc >= float(0):
+            return disc
+        else:
+            return "sus"

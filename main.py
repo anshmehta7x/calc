@@ -3,6 +3,7 @@ import sys
 from operations import solution
 from operations import trigerrcheck
 from operations import logsolve
+from operations import q
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QLabel
@@ -370,8 +371,30 @@ class quadwin(QWidget):
         self.makeui()
 
     def operation(self):
-        print("yeet")
-        pass
+        a = self.abox.text()
+        b = self.bbox.text()
+        c = self.cbox.text()
+        
+        if float(b) < 0:
+            bsign = "-"
+        else:
+            bsign = "+"
+        
+        if float(c) < 0:
+            csign = "-"
+        else:
+            csign = "+"
+
+        stat = str(float(a)) + " 𝑥² "+ bsign + " " + str(abs(float(b))) + " 𝑥 "+ csign + " " + str(abs(float(c)))
+
+        self.statement = QLabel(stat)
+        self.statement.setAlignment(Qt.AlignCenter)
+        self.output = QLabel(q(a,b,c))
+        self.graph = QLabel("")
+        self.outui()
+        #self.l.addWidget(self.output,12,1,1,3)
+        #self.l.addWidget(self.graph,13,1,1,3)
+        
         
     def clr(self):
         self.abox.setText("")
@@ -387,6 +410,7 @@ class quadwin(QWidget):
             self.mode = self.cbox
 
     def d(self,numbr):
+
         x = str(numbr)
         y = self.mode.text()
         y += x
@@ -409,7 +433,6 @@ class quadwin(QWidget):
         self.clabel = QPushButton("    c :")
         self.cbox = QLineEdit()
         self.equal = QPushButton("=")
-        self.output = QLabel("")
         self.clear = QPushButton("CLR")
         self.equal.setStyleSheet(open("styles/altstyling.css").read())
         self.clear.setStyleSheet(open("styles/altstyling.css").read())
@@ -418,7 +441,7 @@ class quadwin(QWidget):
         self.clabel.setStyleSheet(open("styles/styling.css").read())
 
         #defaut config
-        self.mode = self.alabel
+        self.mode = self.abox
         
         #nuumbers
         self.one = QPushButton("1")
@@ -472,6 +495,35 @@ class quadwin(QWidget):
         self.nine.clicked.connect(lambda: self.d(9))
         self.zero.clicked.connect(lambda: self.d(0))
         self.dot.clicked.connect(lambda: self.d("."))
+    
+    def outui(self):
+        
+        self.l.removeWidget(self.toplabel)
+        self.l.removeWidget(self.guidelabel)
+        self.l.removeWidget(self.alabel)
+        self.l.removeWidget(self.abox)
+        self.l.removeWidget(self.blabel)
+        self.l.removeWidget(self.bbox)
+        self.l.removeWidget(self.clabel)
+        self.l.removeWidget(self.cbox)
+        self.l.removeWidget(self.equal)
+        self.l.removeWidget(self.one)
+        self.l.removeWidget(self.two)
+        self.l.removeWidget(self.three)
+        self.l.removeWidget(self.four)
+        self.l.removeWidget(self.five)
+        self.l.removeWidget(self.six)
+        self.l.removeWidget(self.seven)
+        self.l.removeWidget(self.eight)
+        self.l.removeWidget(self.nine)
+        self.l.removeWidget(self.dot)
+        self.l.removeWidget(self.zero)
+        self.l.removeWidget(self.clear)
+
+        self.l.addWidget(self.statement,1,1)
+        self.l.addWidget(self.output,2,1)
+        print("bruh")
+        
 #functions
 
 def a(n):
@@ -528,5 +580,6 @@ trig.clicked.connect(tr)
 log.clicked.connect(lo)
 quad.clicked.connect(qu)
 
-win.show()
-sys.exit(ap.exec_())
+if __name__ == "__main__":
+    win.show()
+    sys.exit(ap.exec_())    
