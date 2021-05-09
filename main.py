@@ -1,21 +1,21 @@
-import sys
-import os
+from sys import exit
+from os import remove
 
 from operations import solution
 from operations import trigerrcheck
 from operations import logsolve
 from operations import q
 
-from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QLineEdit,QPushButton,QCheckBox,QSlider
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QLineEdit,QPushButton,QCheckBox,QSlider, QMainWindow
 
 from PyQt5 import QtGui
 from PyQt5.Qt import Qt
 
 import matplotlib.pyplot as pp
-import numpy
+from numpy import linspace
 
 ap = QApplication([])
-win =  QWidget()
+win =  QMainWindow()
 
 win.setStyleSheet(open('styles/parwindowstyling.css').read())
 win.setWindowTitle("Calculator")
@@ -102,8 +102,6 @@ lay.addWidget(trig,8,1,1,2)
 lay.addWidget(log,8,3,1,2)
 #row 8
 lay.addWidget(quad,9,1,1,4)
-
-
 
 #trig window
 class trigwin(QWidget):
@@ -371,55 +369,58 @@ class quadwin(QWidget):
         self.makeui()
 
     def operation(self):
-        a = self.abox.text()
-        b = self.bbox.text()
-        c = self.cbox.text()
-        
-        if float(b) < 0:
-            bsign = "-"
-        else:
-            bsign = "+"
-        
-        if float(c) < 0:
-            csign = "-"
-        else:
-            csign = "+"
-
-        stat = str(float(a)) + " 𝑥² "+ bsign + " " + str(abs(float(b))) + " 𝑥 "+ csign + " " + str(abs(float(c)))
-
         try:
-            A = float(a)
-            B = float(b)
-            C = float(c)
+            a = self.abox.text()
+            b = self.bbox.text()
+            c = self.cbox.text()
+            
+            if float(b) < 0:
+                bsign = "-"
+            else:
+                bsign = "+"
+            
+            if float(c) < 0:
+                csign = "-"
+            else:
+                csign = "+"
+
+            stat = str(float(a)) + " 𝑥² "+ bsign + " " + str(abs(float(b))) + " 𝑥 "+ csign + " " + str(abs(float(c)))
+
+            try:
+                A = float(a)
+                B = float(b)
+                C = float(c)
+            except:
+                pass
+
+            maxmin = -B/(2*A)
+            front = maxmin + 2.5*(maxmin)
+            back = maxmin - 2.5*(maxmin)
+
+            x = linspace(back,front,20)
+
+            y = A*(x**2) + B*x + C
+
+            fig = pp.figure(figsize=(8,5))
+            fig.set_facecolor('#66cdaa')
+            ax = pp.axes()
+            ax.set_facecolor('#66cdaa')
+            pp.plot(x,y,'#006400')
+            pp.savefig('sus.png')
+
+            self.statement = QLabel(stat)
+            self.maximaminima = QLabel("Maxima/minima at: x= {}".format(str(maxmin)))
+            self.statement.setAlignment(Qt.AlignCenter)
+            self.statement.setStyleSheet(open('styles/styling.css').read())
+            self.output = QLabel(q(a,b,c))
+            self.graph = QLabel("")
+            pmap =  QtGui.QPixmap('sus.png')
+            remove('sus.png')
+            self.graph.setPixmap(pmap)
+            self.rst = QPushButton("Reset")
+            self.outui()
         except:
             pass
-
-        maxmin = -B/(2*A)
-        front = maxmin + 2.5*(maxmin)
-        back = maxmin - 2.5*(maxmin)
-
-        x = numpy.linspace(back,front,20)
-
-        y = A*(x**2) + B*x + C
-
-        fig = pp.figure(figsize=(8,5))
-        fig.set_facecolor('#66cdaa')
-        ax = pp.axes()
-        ax.set_facecolor('#66cdaa')
-        pp.plot(x,y,'#006400')
-        pp.savefig('sus.png')
-
-        self.statement = QLabel(stat)
-        self.maximaminima = QLabel("Maxima/minima at: x= {}".format(str(maxmin)))
-        self.statement.setAlignment(Qt.AlignCenter)
-        self.statement.setStyleSheet(open('styles/styling.css').read())
-        self.output = QLabel(q(a,b,c))
-        self.graph = QLabel("")
-        pmap =  QtGui.QPixmap('sus.png')
-        os.remove('sus.png')
-        self.graph.setPixmap(pmap)
-        self.rst = QPushButton("Reset")
-        self.outui()
         
     def clr(self):
         self.abox.setText("")
@@ -506,6 +507,9 @@ class quadwin(QWidget):
 
         self.clear.clicked.connect(self.clr)
         self.equal.clicked.connect(lambda: self.operation())
+        self.abox.returnPressed.connect(lambda: self.operation())
+        self.bbox.returnPressed.connect(lambda: self.operation())
+        self.cbox.returnPressed.connect(lambda: self.operation())
         self.alabel.clicked.connect(lambda: self.setbox("a"))
         self.blabel.clicked.connect(lambda: self.setbox("b"))
         self.clabel.clicked.connect(lambda: self.setbox("c"))
@@ -551,6 +555,12 @@ def a(n):
 def clr():
     line.setText("")
 
+def repl():
+    x = line.text()
+    y = x.replace("/","÷")
+    z = y.replace("*","x")
+    line.setText(z)
+
 def eq():
     x = line.text()
     s = solution(x)
@@ -572,7 +582,7 @@ def qu():
     speedwagon.show()
 
 #connections
-
+line.textChanged.connect(repl)
 one.clicked.connect(lambda: a(1))
 two.clicked.connect(lambda: a(2))
 three.clicked.connect(lambda: a(3))
@@ -598,4 +608,4 @@ quad.clicked.connect(qu)
 
 if __name__ == "__main__":
     win.show()
-    sys.exit(ap.exec_())    
+    exit(ap.exec_())

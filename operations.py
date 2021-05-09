@@ -133,19 +133,22 @@ def subtractsolve(j):
     return s
 
 def solution(bruh):
-    iput = str(bruh)
-    
-    if errcheck(iput) == 0:
-        if re.search('[x+\-÷\^]', iput) is None:
+    try:
+        iput = str(bruh)
+        
+        if errcheck(iput) == 0:
+            if re.search('[x+\-÷\^]', iput) is None:
 
-            return iput
+                return iput
+            else:
+                x = subtractsolve(addsolve(multsolve(dividesolve(powersolve(iput)))))
+                return x  
+
         else:
-            x = subtractsolve(addsolve(multsolve(dividesolve(powersolve(iput)))))
-            return x  
-
-    else:
-        return errcheck(iput)
-
+            return errcheck(iput)
+    except:
+        pass
+    
 def errcheck(inp):
     t2 = re.search('[x+\-÷\^]$',inp)
     if t2 != None:
@@ -162,95 +165,98 @@ def errcheck(inp):
     return 0
 
 def trigsolve(mainstr,func,inverse,mode):
-    if "π" in mainstr:
-        nopi = mainstr.replace("π","")
-        piremoved = float(nopi) * math.pi
+    try:
+        if "π" in mainstr:
+            nopi = mainstr.replace("π","")
+            piremoved = float(nopi) * math.pi
 
-    else:
-        piremoved = float(mainstr)
-
-    if inverse == False:
-        if mode == True:
-            rads = math.radians(piremoved)
         else:
-            rads = piremoved
+            piremoved = float(mainstr)
 
-        if func == "sin":
+        if inverse == False:
+            if mode == True:
+                rads = math.radians(piremoved)
+            else:
+                rads = piremoved
+
+            if func == "sin":
+                
+                return round(math.sin(rads),4)
             
-            return round(math.sin(rads),4)
-        
-        elif func == "cos":
-            return round(math.cos(rads),4)
+            elif func == "cos":
+                return round(math.cos(rads),4)
 
-        elif func == "tan":
-            if math.tan(rads) > 10000000:
-                return "undefined"
-            else:
-                return round(math.tan(rads),4)
-        
-        elif func == "csc":
-            return round(1/math.sin(rads),4)
-        
-        elif func == "sec":
-            return round(1/math.cos(rads),4)
-
-        elif func == "cot":
-            try:
-                1/math.tan(rads)
-            except ZeroDivisionError:
-                return "undefined"
-            if 1/math.tan(rads) > 10000000:
-                return "undefined"
-            else:
-                return round(math.tan(rads),4)
-    
-    elif inverse == True:
-
-        if func == "sin":
-            x = math.asin(piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
-
-        elif func == "cos":
-            x = math.acos(piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
-
+            elif func == "tan":
+                if math.tan(rads) > 10000000:
+                    return "undefined"
+                else:
+                    return round(math.tan(rads),4)
             
+            elif func == "csc":
+                return round(1/math.sin(rads),4)
+            
+            elif func == "sec":
+                return round(1/math.cos(rads),4)
 
-        elif func == "tan":
-            x = math.atan(piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
+            elif func == "cot":
+                try:
+                    1/math.tan(rads)
+                except ZeroDivisionError:
+                    return "undefined"
+                if 1/math.tan(rads) > 10000000:
+                    return "undefined"
+                else:
+                    return round(math.tan(rads),4)
+        
+        elif inverse == True:
+
+            if func == "sin":
+                x = math.asin(piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
+
+            elif func == "cos":
+                x = math.acos(piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
+
+                
+
+            elif func == "tan":
+                x = math.atan(piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
 
 
-        elif func == "csc":
-            x = math.asin(1/piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
+            elif func == "csc":
+                x = math.asin(1/piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
 
-        elif func == "sec":
-            x = math.acos(1/piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
+            elif func == "sec":
+                x = math.acos(1/piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
 
 
-        elif func == "cot":
-            x = math.atan(1/piremoved)
-            if mode == True:
-                return round(math.degrees(x),4)
-            else:
-                return round(x,4)
+            elif func == "cot":
+                x = math.atan(1/piremoved)
+                if mode == True:
+                    return round(math.degrees(x),4)
+                else:
+                    return round(x,4)
+    except:
+        pass
 
 def trigerrcheck(mainstr,func,inverse,mode):
 
@@ -269,27 +275,31 @@ def trigerrcheck(mainstr,func,inverse,mode):
     return trigsolve(mainstr,func,inverse,mode)
 
 def logsolve(inpval, base):
-    if "e" in inpval:
-        if inpval == "e":
-            i = math.e
+    try:
+        if "e" in inpval:
+            if inpval == "e":
+                i = math.e
+            else:
+                x = inpval.replace("e","")
+                i = float(x) * math.e
+        
         else:
-            x = inpval.replace("e","")
-            i = float(x) * math.e
-    
-    else:
-        i = float(inpval)
-    
-    if "e" in base:
-        if base == "e":
-            b = math.e
+            i = float(inpval)
+        
+        if "e" in base:
+            if base == "e":
+                b = math.e
+            else:
+                y = base.replace("e","")
+                b = float(y) * math.e
+        
         else:
-            y = base.replace("e","")
-            b = float(y) * math.e
-    
-    else:
-        b = float(base)
-    
-    return math.log(i,b)
+            b = float(base)
+
+        return math.log(i,b)
+        
+    except:
+        pass
 
 def q(a,b,c):
     try:
