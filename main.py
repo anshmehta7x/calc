@@ -1,12 +1,13 @@
 from sys import exit
 from os import remove
+import webbrowser
 
 from operations import solution
 from operations import trigerrcheck
 from operations import logsolve
 from operations import q
 
-from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QLineEdit,QPushButton,QCheckBox,QSlider, QMainWindow
+from PyQt5.QtWidgets import QApplication,QLabel,QWidget,QGridLayout,QLineEdit,QPushButton,QCheckBox,QSlider
 
 from PyQt5 import QtGui
 from PyQt5.Qt import Qt
@@ -14,9 +15,9 @@ from PyQt5.Qt import Qt
 import matplotlib.pyplot as pp
 from numpy import linspace
 
+HELP_LINK = 'https://github.com/anshmehta7x/calc/blob/master/README.md'
 ap = QApplication([])
-win =  QMainWindow()
-
+win =  QWidget()
 win.setStyleSheet(open('styles/parwindowstyling.css').read())
 win.setWindowTitle("Calculator")
 win.setWindowIcon(QtGui.QIcon('assets/icon.png'))
@@ -47,6 +48,7 @@ clear = QPushButton("CLR")
 trig = QPushButton("Trig")
 log = QPushButton("Log")
 quad = QPushButton("Quadratic")
+help_ = QPushButton("Help")
 
 #coloring
 one.setStyleSheet(open("styles/styling.css").read())
@@ -71,6 +73,7 @@ trig.setStyleSheet(open('styles/parwindowstyling.css').read())
 line.setStyleSheet(open("styles/styling.css").read())
 log.setStyleSheet(open('styles/parwindowstyling.css').read())
 quad.setStyleSheet(open('styles/parwindowstyling.css').read())
+help_.setStyleSheet(open('styles/parwindowstyling.css').read())
 
 #row 1
 lay.addWidget(line,1,1,2,4)
@@ -101,7 +104,8 @@ lay.addWidget(clear,7,4)
 lay.addWidget(trig,8,1,1,2)
 lay.addWidget(log,8,3,1,2)
 #row 8
-lay.addWidget(quad,9,1,1,4)
+lay.addWidget(quad,9,1,1,2)
+lay.addWidget(help_,9,3,1,2)
 
 #trig window
 class trigwin(QWidget):
@@ -581,6 +585,9 @@ def qu():
     speedwagon = quadwin()
     speedwagon.show()
 
+def helper():
+    webbrowser.open(HELP_LINK,new=2)
+
 #connections
 line.textChanged.connect(repl)
 one.clicked.connect(lambda: a(1))
@@ -605,6 +612,7 @@ line.returnPressed.connect(eq)
 trig.clicked.connect(tr)
 log.clicked.connect(lo)
 quad.clicked.connect(qu)
+help_.clicked.connect(helper)
 
 if __name__ == "__main__":
     win.show()
